@@ -16,7 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from core.views.dynamic import (
+    get_schema_view,
+    get_all_schemas_view,
+    health_check
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Health check
+    path('api/health/', health_check, name='health_check'),
+    
+    # Schema introspection endpoints
+    path('api/schema/<str:model_name>/', get_schema_view, name='get_schema'),
+    path('api/schema/all/', get_all_schemas_view, name='get_all_schemas'),
+    
+    # Dynamic CRUD endpoints (we'll add these next phase)
+    # path('api/<str:model_name>/', dynamic_crud_handler),
+    # path('api/<str:model_name>/<int:pk>/', dynamic_detail_handler),
 ]

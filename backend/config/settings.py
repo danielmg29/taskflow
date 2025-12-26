@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     # Third-party apps
     'rest_framework',  # Add this
     'corsheaders',     # Add this
+
+    # Your apps
+    'apps.tasks',  # Add this line
 ]
 
 MIDDLEWARE = [
