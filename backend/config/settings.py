@@ -84,10 +84,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# PostgreSQL (Neon) Configuration
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('PGDATABASE'),
+        'USER': config('PGUSER'),
+        'PASSWORD': config('PGPASSWORD'),
+        'HOST': config('PGHOST'),
+        'PORT': config('PGPORT', default=5432, cast=int),
+        'OPTIONS': {
+            'sslmode': 'require',  # Neon requires SSL
+        },
+        'DISABLE_SERVER_SIDE_CURSORS': True,  # Important for Neon
+        'CONN_MAX_AGE': 0,  # Close connections after each request
     }
 }
 
